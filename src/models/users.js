@@ -30,5 +30,12 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+userSchema.set("toJSON", {
+  transform: function (doc, ret, opt) {
+    delete ret["password"];
+    return ret;
+  },
+});
+
 const User = model("users", userSchema);
 export default User;
