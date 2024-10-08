@@ -2,7 +2,10 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import connectDB from "./config/connectDB.js";
 dotenv.config();
+
+import router from "./routes/index.js";
 
 const app = express();
 app.use(
@@ -12,6 +15,11 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use(express.json());
+
+// connect db
+connectDB();
+
+app.use("/api", router);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log("Server is running on port", PORT));
