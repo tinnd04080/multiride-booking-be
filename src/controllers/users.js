@@ -1,3 +1,4 @@
+import Permission from "../models/permissions.js";
 import User from "../models/users.js";
 import bcrypt from "bcrypt";
 
@@ -8,7 +9,12 @@ const UserController = {
 
       const user = await User.findById(userId).exec();
 
-      res.json(user);
+      const permission = await Permission.findOne({ user: userId }).exec();
+
+      res.json({
+        ...user.toJSON(),
+        role: permission.role,
+      });
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",

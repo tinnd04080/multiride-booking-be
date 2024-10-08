@@ -1,6 +1,8 @@
 import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { ROLE } from "../constants/index.js";
+import Permission from "../models/permissions.js";
 
 const AuthController = {
   signUp: async (req, res) => {
@@ -21,9 +23,9 @@ const AuthController = {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       const userCount = await User.countDocuments();
-      const role = userCount > 0 ? "USER" : "ADMIN";
+      const role = userCount > 0 ? ROLE.CUSTOMER : ROLE.ADMIN;
 
-      await new User({
+      const user = await new User({
         userName,
         password,
         email,
@@ -31,6 +33,10 @@ const AuthController = {
         fullName,
         cccd,
         password: hashedPassword,
+      }).save();
+
+      await new Permission({
+        user: user._id,
         role,
       }).save();
 
