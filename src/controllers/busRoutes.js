@@ -1,14 +1,19 @@
 import { PAGINATION } from "../constants/index.js";
-import BusTypes from "../models/busTypes.js";
+import BusRoutes from "../models/busRoutes.js";
 
-const BusTypesController = {
-  createBusTypes: async (req, res) => {
+const BusRouteController = {
+  createBusRoutes: async (req, res) => {
     try {
-      const { name, seatNumber, price } = req.body;
+      const { startLocation, endLocation, duration, status } = req.body;
 
-      const busType = await new BusTypes({ name, seatNumber, price }).save();
+      const busRoute = await new BusRoutes({
+        startLocation,
+        endLocation,
+        duration,
+        status,
+      }).save();
 
-      res.json(busType);
+      res.json(busRoute);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -17,23 +22,23 @@ const BusTypesController = {
     }
   },
 
-  getBusTypes: async (req, res) => {
+  getBusRoutes: async (req, res) => {
     try {
       const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
 
-      const busTypes = await BusTypes.find()
+      const busRoutes = await BusRoutes.find()
         .sort("-createdAt")
         .skip((page - 1) * limit)
         .limit(limit * 1)
         .exec();
 
-      const count = await BusTypes.countDocuments();
+      const count = await BusRoutes.countDocuments();
 
       const totalPage = Math.ceil(count / limit);
       const currentPage = Number(page);
 
       res.json({
-        data: busTypes,
+        data: busRoutes,
         totalPage,
         currentPage,
       });
@@ -45,13 +50,13 @@ const BusTypesController = {
     }
   },
 
-  getBusType: async (req, res) => {
+  getBusRoute: async (req, res) => {
     try {
       const { id } = req.params;
 
-      const busType = await BusTypes.findById(id);
+      const busRoute = await BusRoutes.findById(id);
 
-      res.json(busType);
+      res.json(busRoute);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -60,22 +65,23 @@ const BusTypesController = {
     }
   },
 
-  updateBusType: async (req, res) => {
+  updateBusRoute: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, seatNumber, price } = req.body;
+      const { startLocation, endLocation, duration, status } = req.body;
 
-      const busType = await BusTypes.findByIdAndUpdate(
+      const busRoute = await BusRoutes.findByIdAndUpdate(
         id,
         {
-          name,
-          seatNumber,
-          price,
+          startLocation,
+          endLocation,
+          duration,
+          status,
         },
         { new: true }
       );
 
-      res.json(busType);
+      res.json(busRoute);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -84,13 +90,13 @@ const BusTypesController = {
     }
   },
 
-  removeBusType: async (req, res) => {
+  removeBusRoute: async (req, res) => {
     try {
       const { id } = req.params;
 
-      const busType = await BusTypes.findByIdAndDelete(id);
+      const busRoute = await BusRoutes.findByIdAndDelete(id);
 
-      res.json(busType);
+      res.json(busRoute);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -100,4 +106,4 @@ const BusTypesController = {
   },
 };
 
-export default BusTypesController;
+export default BusRouteController;
