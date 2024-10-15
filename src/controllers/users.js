@@ -1,3 +1,4 @@
+import { PAGINATION } from "../constants/index.js";
 import Permission from "../models/permissions.js";
 import User from "../models/users.js";
 import bcrypt from "bcrypt";
@@ -88,6 +89,89 @@ const UserController = {
       res.json({
         message: "Đổi mật khẩu thành công",
       });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  getUsers: async (req, res) => {
+    try {
+      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
+
+      const users = await User.find()
+        .sort("-createdAt")
+        .skip((page - 1) * limit)
+        .limit(limit * 1)
+        .exec();
+
+      const count = await User.countDocuments();
+
+      const totalPage = Math.ceil(count / limit);
+      const currentPage = Number(page);
+
+      res.json({
+        data: users,
+        totalPage,
+        currentPage,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  getUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const user = await User.findById(id);
+
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  updateUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { userName, phoneNumber, fullName, cccd } = req.body;
+
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          userName,
+          phoneNumber,
+          fullName,
+          cccd,
+        },
+        { new: true }
+      );
+
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  removeUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const user = await User.findByIdAndDelete(id);
+
+      res.json(user);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",

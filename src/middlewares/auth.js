@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/users.js";
+import Permission from "../models/permissions.js";
 
 export const checkLogin = (req, res, next) => {
   try {
@@ -31,7 +32,9 @@ export const isAdmin = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const isAdmin = foundUser.role === "ADMIN";
+    const permission = await Permission.findOne({ user: foundUser._id }).exec();
+
+    const isAdmin = permission.role === "ADMIN";
     if (!isAdmin) {
       return res.status(403).json({ message: "Forbidden" });
     }
