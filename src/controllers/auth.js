@@ -3,6 +3,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ROLE } from "../constants/index.js";
 import Permission from "../models/permissions.js";
+import crypto from "crypto";
+import OtpCodes from "../models/otpCodes.js";
+import sendMail from "../utils/sendMail.js";
+import dayjs from "dayjs";
 
 const AuthController = {
   signUp: async (req, res) => {
@@ -35,6 +39,24 @@ const AuthController = {
         password: hashedPassword,
       }).save();
 
+      // send email verify
+      const expireMinutes = 15;
+      const otp = crypto.randomInt(100000, 999999).toString();
+      const otpExpires = new Date(Date.now() + expireMinutes * 60 * 1000);
+
+      await sendMail({
+        toEmail: email,
+        title: "Xác thực tài khoản",
+        content: `Mã xác thực tài khoản của bạn là: ${otp}. Vui lòng nhập mã OTP để xác minh tài khoản, mã OTP có hiệu lực tối đa ${expireMinutes} phút.`,
+      });
+
+      await new OtpCodes({
+        user: user._id,
+        code: otp,
+        expired: otpExpires,
+      }).save();
+
+      // save permission
       await new Permission({
         user: user._id,
         role,
@@ -63,6 +85,13 @@ const AuthController = {
         return res.status(404).json({ message: "Tài khoản chưa đăng ký!" });
       }
 
+      // kiểm tra tài khoản đã xác minh chưa
+      if (!findUser.isVerified) {
+        return res
+          .status(400)
+          .json({ message: "Tài khoản chưa được xác minh" });
+      }
+
       // check password
       const isPasswordValid = await bcrypt.compare(password, findUser.password);
 
@@ -83,6 +112,86 @@ const AuthController = {
         user: findUser,
         token,
       });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  verifyOtp: async (req, res) => {
+    try {
+      const { email, otp } = req.body;
+
+      const user = await User.findOne({ email }).exec();
+
+      if (!user) {
+        return res.status(404).json({
+          message: "Không tìm thấy tài khoản",
+        });
+      }
+
+      const otpData = await OtpCodes.findOne({
+        user: user._id,
+        code: otp,
+      }).exec();
+      if (!otpData) {
+        return res.status(404).json({ message: "Mã OTP không chính xác" });
+      }
+
+      const isExpired = dayjs(otpData.expired).diff(dayjs()) <= 0;
+      if (isExpired) {
+        return res.status(400).json({ message: "Mã OTP đã hết hạn" });
+      }
+
+      user.isVerified = true;
+      await user.save();
+
+      await OtpCodes.findByIdAndDelete(otpData._id);
+      res.json({ message: "Xác minh tài khoản thành công" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  resendOtp: async (req, res) => {
+    const { email } = req.body;
+    try {
+      const user = await User.findOne({ email }).exec();
+
+      if (!user) {
+        return res.status(404).json({
+          message: "Không tìm thấy tài khoản",
+        });
+      }
+
+      if (user.isVerified) {
+        return res.json({
+          message: "Tài khoản đã được xác minh",
+        });
+      }
+
+      // send email verify
+      const expireMinutes = 15;
+      const otp = crypto.randomInt(100000, 999999).toString();
+      const otpExpires = new Date(Date.now() + expireMinutes * 60 * 1000);
+
+      await sendMail({
+        toEmail: email,
+        title: "Xác thực tài khoản",
+        content: `Mã xác thực tài khoản của bạn là: ${otp}. Vui lòng nhập mã OTP để xác minh tài khoản, mã OTP có hiệu lực tối đa ${expireMinutes} phút.`,
+      });
+
+      await OtpCodes.findOneAndUpdate(
+        { user: user._id },
+        { code: otp, expired: otpExpires }
+      ).exec();
+
+      res.json(true);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
