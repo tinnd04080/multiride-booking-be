@@ -13,3 +13,8 @@ export const PAGINATION = {
   PAGE: 1,
   LIMIT: 10,
 };
+
+export const BUS_ROUTES_STATUS = {
+  OPEN: "OPEN",
+  CLOSED: "CLOSED",
+};
