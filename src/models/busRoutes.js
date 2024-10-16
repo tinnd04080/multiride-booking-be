@@ -12,7 +12,7 @@ const busRoutesSchema = new Schema(
       required: true,
     },
     duration: {
-      type: Number,
+      type: Date,
       required: true,
     },
     status: {
