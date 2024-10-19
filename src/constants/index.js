@@ -19,3 +19,8 @@ export const BUS_ROUTES_STATUS = {
   OPEN: "OPEN",
   CLOSED: "CLOSED",
 };
+
+export const SEAT_STATUS = {
+  EMPTY: "EMPTY",
+  SOLD: "SOLD",
+};
