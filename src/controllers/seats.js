@@ -1,5 +1,4 @@
 import { PAGINATION } from "../constants/index.js";
-import BusTypes from "../models/busTypes.js";
 import Seats from "../models/seats.js";
 
 const SeatController = {
