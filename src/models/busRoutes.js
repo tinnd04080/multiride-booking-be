@@ -3,11 +3,19 @@ import { BUS_ROUTES_STATUS } from "../constants/index.js";
 
 const busRoutesSchema = new Schema(
   {
+    startProvince: {
+      type: String,
+      required: true,
+    },
     startLocation: {
       type: String,
       required: true,
     },
     endLocation: {
+      type: String,
+      required: true,
+    },
+    endProvince: {
       type: String,
       required: true,
     },
