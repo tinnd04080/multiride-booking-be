@@ -6,6 +6,7 @@ import connectDB from "./config/connectDB.js";
 dotenv.config();
 
 import router from "./routes/index.js";
+import cronJobInitial from "./config/cronJobInitial.js";
 
 const app = express();
 app.use(
@@ -18,6 +19,8 @@ app.use(express.json());
 
 // connect db
 connectDB();
+
+cronJobInitial();
 
 app.use("/api", router);
 

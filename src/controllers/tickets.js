@@ -47,7 +47,7 @@ const updateSeatStt = async ({ busId, seatNumber, status }) => {
   await Promise.all(updateSeatTask);
 };
 
-const ticketUpdateStt = async ({ ticketId, status }) => {
+export const ticketUpdateStt = async ({ ticketId, status }) => {
   const ticket = await Tickets.findByIdAndUpdate(
     ticketId,
     {
