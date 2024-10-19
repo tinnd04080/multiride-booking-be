@@ -38,3 +38,8 @@ export const NOTIFICATION_TYPE = {
   TICKET_BOOK_FAILED: "TICKET_BOOK_FAILED", // thanh toán thất bại
   TICKET_CANCELED: "TICKET_CANCELED", // vé bị huỷ
 };
+
+export const DISCOUNT_TYPE = {
+  AMOUNT: "AMOUNT",
+  PERCENT: "PERCENT",
+};

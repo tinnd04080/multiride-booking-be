@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { PAGINATION } from "../constants/index.js";
 import BusRoutes from "../models/busRoutes.js";
 
@@ -33,9 +34,32 @@ const BusRouteController = {
 
   getBusRoutes: async (req, res) => {
     try {
-      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
+      const {
+        page = PAGINATION.PAGE,
+        limit = PAGINATION.LIMIT,
+        startProvince,
+        startLocation,
+        endProvince,
+        endLocation,
+        status,
+        duration,
+      } = req.query;
 
-      const busRoutes = await BusRoutes.find()
+      const queryObj = {};
+
+      startProvince && (queryObj.startProvince = startProvince);
+      startLocation && (queryObj.startLocation = startLocation);
+      endProvince && (queryObj.endProvince = endProvince);
+      endLocation && (queryObj.endLocation = endLocation);
+      status && (queryObj.status = status);
+      if (duration) {
+        queryObj.duration = {
+          $gte: dayjs(duration).startOf("day").toDate(),
+          $lte: dayjs(duration).endOf("day").toDate(),
+        };
+      }
+
+      const busRoutes = await BusRoutes.find(queryObj)
         .sort("-createdAt")
         .skip((page - 1) * limit)
         .limit(limit * 1)
