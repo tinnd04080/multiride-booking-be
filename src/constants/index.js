@@ -24,3 +24,10 @@ export const SEAT_STATUS = {
   EMPTY: "EMPTY",
   SOLD: "SOLD",
 };
+
+export const TICKET_STATUS = {
+  INITIAL: "INITIAL",
+  PAID: "PAID",
+  PAYMENT_FAILED: "PAYMENT_FAILED",
+  CANCELED: "CANCELED",
+};
