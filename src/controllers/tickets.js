@@ -11,6 +11,7 @@ import createVNPayPaymentUrl from "../utils/payment.js";
 import Notification from "../models/notifications.js";
 import Trip from "../models/trips.js";
 import Seat from "../models/seats.js";
+import Promotion, { PromotionUsage } from "../models/promotion.js";
 
 const getListTicket = async (page, limit, queryObj = {}) => {
   const tickets = await Tickets.find(queryObj)
@@ -122,12 +123,13 @@ const TicketController = {
         dropOffPoint,
         totalAmount,
         status,
+        discountCode,
       } = req.body;
 
       const user = req.user.id;
       const code = `MD${randomNumber(5)}`;
 
-      await new Tickets({
+      const ticket = await new Tickets({
         user,
         customerPhone,
         customerName,
@@ -149,6 +151,20 @@ const TicketController = {
         seatNumber,
         status: SEAT_STATUS.SOLD,
       });
+
+      // mã giảm giá
+      if (discountCode) {
+        const discount = await Promotion.findOne({ code: discountCode }).exec();
+        if (!discount) {
+          return res.status(404).json({ message: "Mã giảm giá không tồn tại" });
+        } else {
+          await new PromotionUsage({
+            user,
+            ticket: ticket._id,
+            promotion: discount._id,
+          }).save();
+        }
+      }
 
       res.json({
         message: "Create ticket successfully",
@@ -218,11 +234,20 @@ const TicketController = {
         .populate(["user", "trip"])
         .exec();
 
+      let promotion = null;
+      const promotionUsage = await PromotionUsage.findOne({
+        ticket: ticket._id,
+      }).exec();
+      if (promotionUsage) {
+        promotion = await Promotion.findById(promotionUsage.promotion).exec();
+      }
+
       const bus = await Bus.findById(ticket.trip.bus).populate("driver").exec();
 
       res.json({
         ...ticket.toJSON(),
         driver: bus.driver,
+        promotion,
       });
     } catch (error) {
       res.status(500).json({

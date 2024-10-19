@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { PAGINATION } from "../constants/index.js";
 import Promotion from "../models/promotion.js";
 
@@ -115,6 +116,34 @@ const PromotionController = {
       const promotion = await Promotion.findByIdAndDelete(id).exec();
 
       res.json(promotion);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  applyPromotion: async (req, res) => {
+    try {
+      const { code } = req.params;
+
+      const discount = await Promotion.findOne({ code }).exec();
+      if (!discount) {
+        return res.status(404).json({ message: "Không tìm thấy mã giảm giá" });
+      }
+
+      const isBeforeStart = dayjs().isBefore(dayjs(discount.startDate));
+      if (isBeforeStart) {
+        return res.status(406).json({ message: "Chưa đến thời gian sử dụng" });
+      }
+
+      const isExpired = dayjs().isAfter(discount.endDate);
+      if (isExpired) {
+        return res.status(406).json({ message: "Mã giảm giá đã hết hạn" });
+      }
+
+      res.json(discount);
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",

@@ -34,4 +34,28 @@ const promotionSchema = new Schema(
 );
 
 const Promotion = model("promotions", promotionSchema);
+
+const promotionUsageSchema = new Schema(
+  {
+    promotion: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "promotions",
+    },
+    ticket: {
+      type: Schema.Types.ObjectId,
+      ref: "tickets",
+      required: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+export const PromotionUsage = model("promotionUsage", promotionUsageSchema);
+
 export default Promotion;

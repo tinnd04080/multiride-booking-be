@@ -29,5 +29,10 @@ promotionRouter.delete(
   isAdmin,
   PromotionController.removePromotion
 );
+promotionRouter.post(
+  "/:code/apply",
+  checkLogin,
+  PromotionController.applyPromotion
+);
 
 export default promotionRouter;
