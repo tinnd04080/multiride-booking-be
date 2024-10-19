@@ -1,8 +1,16 @@
-import { PAGINATION } from "../constants/index.js";
+import {
+  NOTIFICATION_TYPE,
+  PAGINATION,
+  SEAT_STATUS,
+  TICKET_STATUS,
+} from "../constants/index.js";
 import Tickets from "../models/tickets.js";
 import randomNumber from "../utils/randomNumber.js";
 import Bus from "../models/bus.js";
 import createVNPayPaymentUrl from "../utils/payment.js";
+import Notification from "../models/notifications.js";
+import Trip from "../models/trips.js";
+import Seat from "../models/seats.js";
 
 const getListTicket = async (page, limit, queryObj = {}) => {
   const tickets = await Tickets.find(queryObj)
@@ -24,6 +32,82 @@ const getListTicket = async (page, limit, queryObj = {}) => {
   };
 };
 
+const updateSeatStt = async ({ busId, seatNumber, status }) => {
+  const updateSeatTask = seatNumber.map((seatName) => {
+    return Seat.findOneAndUpdate(
+      {
+        bus: busId,
+        seatNumber: seatName,
+      },
+      {
+        status,
+      }
+    );
+  });
+  await Promise.all(updateSeatTask);
+};
+
+export const ticketUpdateStt = async ({ ticketId, status }) => {
+  const ticket = await Tickets.findByIdAndUpdate(
+    ticketId,
+    {
+      status,
+    },
+    { new: true }
+  )
+    .populate("trip")
+    .exec();
+
+  // save notification
+  switch (status) {
+    case TICKET_STATUS.CANCELED: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_CANCELED,
+        user: ticket.user,
+      }).save();
+
+      // cập nhật trạng thái => ghế trống
+      await updateSeatStt({
+        busId: ticket.trip.bus,
+        seatNumber: ticket.seatNumber,
+        status: SEAT_STATUS.EMPTY,
+      });
+      break;
+    }
+
+    case TICKET_STATUS.PAYMENT_FAILED: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_BOOK_FAILED,
+        user: ticket.user,
+      }).save();
+
+      // cập nhật trạng thái => ghế trống
+      await updateSeatStt({
+        busId: ticket.trip.bus,
+        seatNumber: ticket.seatNumber,
+        status: SEAT_STATUS.EMPTY,
+      });
+      break;
+    }
+
+    case TICKET_STATUS.PAID: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_BOOK_SUCCESS,
+        user: ticket.user,
+      }).save();
+      break;
+    }
+
+    default: {
+    }
+  }
+
+  return ticket;
+};
+
 const TicketController = {
   createTicket: async (req, res) => {
     try {
@@ -43,8 +127,6 @@ const TicketController = {
       const user = req.user.id;
       const code = `MD${randomNumber(5)}`;
 
-      console.log(req.user);
-
       await new Tickets({
         user,
         customerPhone,
@@ -59,6 +141,14 @@ const TicketController = {
         totalAmount,
         status,
       }).save();
+
+      // cập nhật trạng thái ghế
+      const tripInfo = await Trip.findById(trip).exec();
+      await updateSeatStt({
+        busId: tripInfo.bus,
+        seatNumber,
+        status: SEAT_STATUS.SOLD,
+      });
 
       res.json({
         message: "Create ticket successfully",
@@ -147,13 +237,7 @@ const TicketController = {
       const { id } = req.params;
       const { status } = req.body;
 
-      const ticket = await Tickets.findByIdAndUpdate(
-        id,
-        {
-          status,
-        },
-        { new: true }
-      );
+      const ticket = await ticketUpdateStt({ ticketId: id, status });
 
       res.json(ticket);
     } catch (error) {
