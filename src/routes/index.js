@@ -6,6 +6,7 @@ import busRouteRouter from "./busRoutes.js";
 import busRouter from "./bus.js";
 import tripRouter from "./trips.js";
 import seatRouter from "./seats.js";
+import ticketRouter from "./tickets.js";
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use("/bus-routes", busRouteRouter);
 router.use("/buses", busRouter);
 router.use("/trips", tripRouter);
 router.use("/seats", seatRouter);
+router.use("/tickets", ticketRouter);
 
 export default router;

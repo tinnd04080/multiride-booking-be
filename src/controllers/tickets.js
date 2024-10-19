@@ -1,0 +1,200 @@
+import { PAGINATION } from "../constants/index.js";
+import Tickets from "../models/tickets.js";
+import randomNumber from "../utils/randomNumber.js";
+import Bus from "../models/bus.js";
+import createVNPayPaymentUrl from "../utils/payment.js";
+
+const getListTicket = async (page, limit, queryObj = {}) => {
+  const tickets = await Tickets.find(queryObj)
+    .sort("-createdAt")
+    .skip((page - 1) * limit)
+    .limit(limit * 1)
+    .populate(["user", "trip"])
+    .exec();
+
+  const count = await Tickets.countDocuments();
+
+  const totalPage = Math.ceil(count / limit);
+  const currentPage = Number(page);
+
+  return {
+    tickets,
+    totalPage,
+    currentPage,
+  };
+};
+
+const TicketController = {
+  createTicket: async (req, res) => {
+    try {
+      const {
+        customerPhone,
+        customerName,
+        customerEmail,
+        note,
+        trip,
+        seatNumber,
+        boardingPoint,
+        dropOffPoint,
+        totalAmount,
+        status,
+      } = req.body;
+
+      const user = req.user.id;
+      const code = `MD${randomNumber(5)}`;
+
+      console.log(req.user);
+
+      await new Tickets({
+        user,
+        customerPhone,
+        customerName,
+        customerEmail,
+        note,
+        trip,
+        code,
+        seatNumber,
+        boardingPoint,
+        dropOffPoint,
+        totalAmount,
+        status,
+      }).save();
+
+      res.json({
+        message: "Create ticket successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  getTickets: async (req, res) => {
+    try {
+      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
+
+      const { tickets, currentPage, totalPage } = await getListTicket(
+        page,
+        limit
+      );
+
+      res.json({
+        data: tickets,
+        totalPage,
+        currentPage,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  getMyTickets: async (req, res) => {
+    try {
+      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
+
+      const queryObj = {
+        user: req.user.id,
+      };
+
+      const { tickets, currentPage, totalPage } = await getListTicket(
+        page,
+        limit,
+        queryObj
+      );
+
+      res.json({
+        data: tickets,
+        totalPage,
+        currentPage,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  getTicket: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const ticket = await Tickets.findById(id)
+        .populate(["user", "trip"])
+        .exec();
+
+      const bus = await Bus.findById(ticket.trip.bus).populate("driver").exec();
+
+      res.json({
+        ...ticket.toJSON(),
+        driver: bus.driver,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  updateTicketStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      const ticket = await Tickets.findByIdAndUpdate(
+        id,
+        {
+          status,
+        },
+        { new: true }
+      );
+
+      res.json(ticket);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
+  createPaymentUrl: async (req, res) => {
+    try {
+      const { ticketId } = req.body;
+
+      const ticket = await Tickets.findById(ticketId).exec();
+      if (!ticket) {
+        return res.status(404).json({ message: "Không tìm thấy vé" });
+      }
+
+      const ipAddr =
+        req.headers["x-forwarded-for"] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+
+      const orderId = `BOOKING_${ticket._id}`;
+      const paymentUrl = await createVNPayPaymentUrl({
+        ipAddr,
+        orderId,
+        amount: ticket.totalAmount,
+        orderInfo: `Thanh toan ve xe ${orderId}`,
+      });
+
+      res.json(paymentUrl);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+};
+
+export default TicketController;
