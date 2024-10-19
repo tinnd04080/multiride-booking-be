@@ -4,9 +4,9 @@ import Bus from "../models/bus.js";
 const BusController = {
   createBus: async (req, res) => {
     try {
-      const { busType, licensePlate } = req.body;
+      const { busType, licensePlate, driver } = req.body;
 
-      const bus = await new Bus({ busType, licensePlate }).save();
+      const bus = await new Bus({ busType, licensePlate, driver }).save();
 
       res.json(bus);
     } catch (error) {
@@ -64,13 +64,14 @@ const BusController = {
   updateBus: async (req, res) => {
     try {
       const { id } = req.params;
-      const { busType, licensePlate } = req.body;
+      const { busType, licensePlate, driver } = req.body;
 
       const bus = await Bus.findByIdAndUpdate(
         id,
         {
           busType,
           licensePlate,
+          driver,
         },
         { new: true }
       ).exec();

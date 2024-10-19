@@ -11,6 +11,11 @@ const busSchema = new Schema(
       type: String,
       required: true,
     },
+    driver: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "users",
+    },
   },
   { timestamps: true }
 );
