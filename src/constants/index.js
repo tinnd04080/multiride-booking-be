@@ -2,6 +2,7 @@ export const ROLE = {
   ADMIN: "ADMIN",
   STAFF: "STAFF",
   CUSTOMER: "CUSTOMER",
+  DRIVER: "DRIVER",
 };
 
 export const ROLE_STATUS = {
