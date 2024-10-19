@@ -1,8 +1,13 @@
-import { PAGINATION } from "../constants/index.js";
+import {
+  NOTIFICATION_TYPE,
+  PAGINATION,
+  TICKET_STATUS,
+} from "../constants/index.js";
 import Tickets from "../models/tickets.js";
 import randomNumber from "../utils/randomNumber.js";
 import Bus from "../models/bus.js";
 import createVNPayPaymentUrl from "../utils/payment.js";
+import Notification from "../models/notifications.js";
 
 const getListTicket = async (page, limit, queryObj = {}) => {
   const tickets = await Tickets.find(queryObj)
@@ -22,6 +27,51 @@ const getListTicket = async (page, limit, queryObj = {}) => {
     totalPage,
     currentPage,
   };
+};
+
+const ticketUpdateStt = async ({ ticketId, status }) => {
+  const ticket = await Tickets.findByIdAndUpdate(
+    ticketId,
+    {
+      status,
+    },
+    { new: true }
+  );
+
+  // save notification
+  switch (status) {
+    case TICKET_STATUS.CANCELED: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_CANCELED,
+        user: ticket.user,
+      }).save();
+      break;
+    }
+
+    case TICKET_STATUS.PAYMENT_FAILED: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_BOOK_FAILED,
+        user: ticket.user,
+      }).save();
+      break;
+    }
+
+    case TICKET_STATUS.PAID: {
+      await new Notification({
+        ticket: ticket._id,
+        type: NOTIFICATION_TYPE.TICKET_BOOK_SUCCESS,
+        user: ticket.user,
+      }).save();
+      break;
+    }
+
+    default: {
+    }
+  }
+
+  return ticket;
 };
 
 const TicketController = {
@@ -147,13 +197,7 @@ const TicketController = {
       const { id } = req.params;
       const { status } = req.body;
 
-      const ticket = await Tickets.findByIdAndUpdate(
-        id,
-        {
-          status,
-        },
-        { new: true }
-      );
+      const ticket = await ticketUpdateStt({ ticketId: id, status });
 
       res.json(ticket);
     } catch (error) {

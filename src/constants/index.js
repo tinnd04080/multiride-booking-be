@@ -31,3 +31,10 @@ export const TICKET_STATUS = {
   PAYMENT_FAILED: "PAYMENT_FAILED",
   CANCELED: "CANCELED",
 };
+
+export const NOTIFICATION_TYPE = {
+  PAYMENT_REMIND: "PAYMENT_REMIND", // nhắc thanh toán vé
+  TICKET_BOOK_SUCCESS: "TICKET_BOOK_SUCCESS", // thanh toán thành công
+  TICKET_BOOK_FAILED: "TICKET_BOOK_FAILED", // thanh toán thất bại
+  TICKET_CANCELED: "TICKET_CANCELED", // vé bị huỷ
+};
