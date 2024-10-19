@@ -4,11 +4,20 @@ import BusRoutes from "../models/busRoutes.js";
 const BusRouteController = {
   createBusRoutes: async (req, res) => {
     try {
-      const { startLocation, endLocation, duration, status } = req.body;
-
-      const busRoute = await new BusRoutes({
+      const {
+        startProvince,
         startLocation,
         endLocation,
+        endProvince,
+        duration,
+        status,
+      } = req.body;
+
+      const busRoute = await new BusRoutes({
+        startProvince,
+        startLocation,
+        endLocation,
+        endProvince,
         duration,
         status,
       }).save();
@@ -68,13 +77,22 @@ const BusRouteController = {
   updateBusRoute: async (req, res) => {
     try {
       const { id } = req.params;
-      const { startLocation, endLocation, duration, status } = req.body;
+      const {
+        startProvince,
+        startLocation,
+        endLocation,
+        endProvince,
+        duration,
+        status,
+      } = req.body;
 
       const busRoute = await BusRoutes.findByIdAndUpdate(
         id,
         {
+          startProvince,
           startLocation,
           endLocation,
+          endProvince,
           duration,
           status,
         },

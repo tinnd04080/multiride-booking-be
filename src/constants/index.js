@@ -2,6 +2,7 @@ export const ROLE = {
   ADMIN: "ADMIN",
   STAFF: "STAFF",
   CUSTOMER: "CUSTOMER",
+  DRIVER: "DRIVER",
 };
 
 export const ROLE_STATUS = {
@@ -17,4 +18,9 @@ export const PAGINATION = {
 export const BUS_ROUTES_STATUS = {
   OPEN: "OPEN",
   CLOSED: "CLOSED",
+};
+
+export const SEAT_STATUS = {
+  EMPTY: "EMPTY",
+  SOLD: "SOLD",
 };
