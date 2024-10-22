@@ -7,20 +7,24 @@ const BusRouteController = {
     try {
       const {
         startProvince,
-        startLocation,
-        endLocation,
+        startDistrict,
+        endDistrict,
         endProvince,
         duration,
         status,
+        distance,
+        pricePerKM,
       } = req.body;
 
       const busRoute = await new BusRoutes({
         startProvince,
-        startLocation,
-        endLocation,
+        startDistrict,
+        endDistrict,
         endProvince,
         duration,
         status,
+        distance,
+        pricePerKM,
       }).save();
 
       res.json(busRoute);
@@ -38,9 +42,9 @@ const BusRouteController = {
         page = PAGINATION.PAGE,
         limit = PAGINATION.LIMIT,
         startProvince,
-        startLocation,
+        startDistrict,
         endProvince,
-        endLocation,
+        endDistrict,
         status,
         duration,
       } = req.query;
@@ -48,9 +52,9 @@ const BusRouteController = {
       const queryObj = {};
 
       startProvince && (queryObj.startProvince = startProvince);
-      startLocation && (queryObj.startLocation = startLocation);
+      startDistrict && (queryObj.startDistrict = startDistrict);
       endProvince && (queryObj.endProvince = endProvince);
-      endLocation && (queryObj.endLocation = endLocation);
+      endDistrict && (queryObj.endDistrict = endDistrict);
       status && (queryObj.status = status);
       if (duration) {
         queryObj.duration = {
@@ -103,22 +107,26 @@ const BusRouteController = {
       const { id } = req.params;
       const {
         startProvince,
-        startLocation,
-        endLocation,
+        startDistrict,
+        endDistrict,
         endProvince,
         duration,
         status,
+        distance,
+        pricePerKM,
       } = req.body;
 
       const busRoute = await BusRoutes.findByIdAndUpdate(
         id,
         {
           startProvince,
-          startLocation,
-          endLocation,
+          startDistrict,
+          endDistrict,
           endProvince,
           duration,
           status,
+          distance,
+          pricePerKM,
         },
         { new: true }
       );

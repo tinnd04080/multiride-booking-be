@@ -4,9 +4,13 @@ import BusTypes from "../models/busTypes.js";
 const BusTypesController = {
   createBusTypes: async (req, res) => {
     try {
-      const { name, seatNumber, price } = req.body;
+      const { name, seatNumber, priceFactor } = req.body;
 
-      const busType = await new BusTypes({ name, seatNumber, price }).save();
+      const busType = await new BusTypes({
+        name,
+        seatNumber,
+        priceFactor,
+      }).save();
 
       res.json(busType);
     } catch (error) {
@@ -63,14 +67,14 @@ const BusTypesController = {
   updateBusType: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, seatNumber, price } = req.body;
+      const { name, seatNumber, priceFactor } = req.body;
 
       const busType = await BusTypes.findByIdAndUpdate(
         id,
         {
           name,
           seatNumber,
-          price,
+          priceFactor,
         },
         { new: true }
       );

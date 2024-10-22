@@ -10,7 +10,7 @@ const busTypesSchema = new Schema(
       type: Number,
       required: true,
     },
-    price: {
+    priceFactor: {
       type: Number,
       required: true,
     },

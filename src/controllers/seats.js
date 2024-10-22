@@ -1,10 +1,19 @@
 import { PAGINATION } from "../constants/index.js";
 import Seats from "../models/seats.js";
+import Bus from "../models/bus.js";
 
 const SeatController = {
   createSeat: async (req, res) => {
     try {
       const { bus, seatNumber, status } = req.body;
+
+      const busInfo = await Bus.findById(bus).exec();
+
+      if (!busInfo) {
+        return res.status(404).json({
+          message: "An error occurred, please try again",
+        });
+      }
 
       const seat = await new Seats({ bus, seatNumber, status }).save();
 
@@ -79,6 +88,14 @@ const SeatController = {
       const { id } = req.params;
       const { bus, seatNumber, status } = req.body;
 
+      const busInfo = await Bus.findById(bus).exec();
+
+      if (!busInfo) {
+        return res.status(404).json({
+          message: "An error occurred, please try again",
+        });
+      }
+
       const seat = await Seats.findByIdAndUpdate(
         id,
         {
@@ -101,6 +118,14 @@ const SeatController = {
   removeSeat: async (req, res) => {
     try {
       const { id } = req.params;
+
+      const data = await Seats.findById(id).exec();
+      const bus = await Bus.findById(data.bus).exec();
+      if (bus) {
+        return res.status(400).json({
+          message: "An error occurred, please try again",
+        });
+      }
 
       const seat = await Seats.findByIdAndDelete(id).exec();
 
