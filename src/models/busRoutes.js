@@ -7,11 +7,11 @@ const busRoutesSchema = new Schema(
       type: String,
       required: true,
     },
-    startLocation: {
+    startDistrict: {
       type: String,
       required: true,
     },
-    endLocation: {
+    endDistrict: {
       type: String,
       required: true,
     },
@@ -27,6 +27,14 @@ const busRoutesSchema = new Schema(
       type: String,
       enum: Object.values(BUS_ROUTES_STATUS),
       default: BUS_ROUTES_STATUS.OPEN,
+    },
+    distance: {
+      type: Number,
+      required: true,
+    },
+    pricePerKM: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true }
