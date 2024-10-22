@@ -1,10 +1,21 @@
 import { PAGINATION } from "../constants/index.js";
+import Bus from "../models/bus.js";
 import Trip from "../models/trips.js";
+import BusRoutes from "../models/busRoutes.js";
 
 const TripController = {
   createTrip: async (req, res) => {
     try {
       const { route, bus, departureTime, arrivalTime } = req.body;
+
+      const busInfo = await Bus.findById(bus).exec();
+      const busRouteInfo = await BusRoutes.findById(route).exec();
+
+      if (!busInfo || !busRouteInfo) {
+        return res.status(404).json({
+          message: "An error occurred, please try again",
+        });
+      }
 
       const trip = await new Trip({
         route,
@@ -71,6 +82,15 @@ const TripController = {
       const { id } = req.params;
       const { route, bus, departureTime, arrivalTime } = req.body;
 
+      const busInfo = await Bus.findById(bus).exec();
+      const busRouteInfo = await BusRoutes.findById(route).exec();
+
+      if (!busInfo || !busRouteInfo) {
+        return res.status(404).json({
+          message: "An error occurred, please try again",
+        });
+      }
+
       const newTrip = await Trip.findByIdAndUpdate(
         id,
         {
@@ -94,6 +114,16 @@ const TripController = {
   removeTrip: async (req, res) => {
     try {
       const { id } = req.params;
+
+      const data = await Trip.findById(id).exec();
+      const route = await BusRoutes.findById(data.route).exec();
+      const bus = await Bus.findById(data.bus).exec();
+
+      if (route || bus) {
+        return res.status(400).json({
+          message: "An error occurred, please try again",
+        });
+      }
 
       const trip = await Trip.findByIdAndDelete(id).exec();
 
