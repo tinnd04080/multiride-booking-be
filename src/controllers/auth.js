@@ -99,6 +99,8 @@ const AuthController = {
         return res.status(400).json({ message: "Mật khẩu không chính xác!" });
       }
 
+      const role = await Permission.findOne({ user: findUser._id }).exec();
+
       const token = jwt.sign(
         {
           id: findUser._id,
@@ -109,7 +111,10 @@ const AuthController = {
       );
 
       res.json({
-        user: findUser,
+        user: {
+          ...findUser.toJSON(),
+          role: role.role,
+        },
         token,
       });
     } catch (error) {

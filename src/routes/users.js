@@ -13,6 +13,12 @@ userRouter.post(
 );
 userRouter.get("/", checkLogin, isAdmin, UserController.getUsers);
 userRouter.get("/:id", checkLogin, isAdmin, UserController.getUser);
+userRouter.put(
+  "/:id/update-role",
+  checkLogin,
+  isAdmin,
+  UserController.updateUserRole
+);
 userRouter.put("/:id", checkLogin, isAdmin, UserController.updateUser);
 userRouter.delete("/:id", checkLogin, isAdmin, UserController.removeUser);
 
