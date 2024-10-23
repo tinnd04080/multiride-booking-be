@@ -165,6 +165,31 @@ const UserController = {
     }
   },
 
+  updateUserRole: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { role } = req.body;
+
+      const user = await User.findById(id).exec();
+      if (!user) {
+        return res.status(404).json({
+          message: "User không tồn tại",
+        });
+      }
+
+      await Permission.findOneAndUpdate({ user: id }, { role }).exec();
+
+      res.json({
+        message: "Update role successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  },
+
   removeUser: async (req, res) => {
     try {
       const { id } = req.params;

@@ -10,11 +10,13 @@ const busSchema = new Schema(
     licensePlate: {
       type: String,
       required: true,
+      unique: true,
     },
     driver: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "users",
+      unique: true,
     },
   },
   { timestamps: true }
