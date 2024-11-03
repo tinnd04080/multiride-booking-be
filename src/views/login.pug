@@ -1,0 +1,67 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  // Tell the browser to be responsive to screen width
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  meta(name='description' content='')
+  meta(name='author' content='')
+  // Favicon icon
+  link(rel='icon' type='image/png' sizes='16x16' href='assets/images/favicon.png')
+  title Admin
+  // Custom CSS
+  link(href='dist/css/style.min.css' rel='stylesheet')
+.main-wrapper
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  .preloader
+    .lds-ripple
+      .lds-pos
+      .lds-pos
+  // ==============================================================
+  // Preloader - style you can find in spinners.css
+  // ==============================================================
+  // ==============================================================
+  // Login box.scss
+  // ==============================================================
+  .auth-wrapper.d-flex.no-block.justify-content-center.align-items-center.position-relative(style='\
+  background: url(assets/images/big/auth-bg.jpg) no-repeat center center;\
+  ')
+    .auth-box.row
+      .col-lg-7.col-md-5.modal-bg-img(style='background-image: url(assets/images/big/3.jpg)')
+      .col-lg-5.col-md-7.bg-white
+        .p-3
+          .text-center
+            img(src='assets/images/big/icon.png' alt='wrapkit')
+          h2.mt-3.text-center &Dstrok;&abreve;ng nh&#x1EAD;p
+          p.text-center
+            | Nh&#x1EAD;p &dstrok;&#x1ECB;a ch&#x1EC9; email v&agrave; m&#x1EAD;t kh&#x1EA9;u c&#x1EE7;a b&#x1EA1;n &dstrok;&#x1EC3; truy c&#x1EAD;p admin
+          form.mt-4
+            .row
+              .col-lg-12
+                .form-group
+                  label.text-dark(for='email') Email
+                  input#email.form-control(type='text' placeholder='Enter your email')
+              .col-lg-12
+                .form-group
+                  label.text-dark(for='pwd') Password
+                  input#pwd.form-control(type='password' placeholder='Enter your password')
+              .col-lg-12.mb-5.text-center
+                button.btn.btn-block.btn-dark(type='submit')
+                  | &Dstrok;&abreve;ng nh&#x1EAD;p
+  // ==============================================================
+  // Login box.scss
+  // ==============================================================
+// ==============================================================
+// All Required js
+// ==============================================================
+script(src='assets/libs/jquery/dist/jquery.min.js ')
+// Bootstrap tether Core JavaScript
+script(src='assets/libs/popper.js/dist/umd/popper.min.js ')
+script(src='assets/libs/bootstrap/dist/js/bootstrap.min.js ')
+// ==============================================================
+// This page plugin js
+// ==============================================================
+script.
+  $(".preloader ").fadeOut();

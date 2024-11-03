@@ -5,6 +5,7 @@ import UserController from "../controllers/users.js";
 const userRouter = express.Router();
 
 userRouter.get("/profile", checkLogin, UserController.getProfile);
+userRouter.get("/admin", UserController.index);
 userRouter.put("/profile", checkLogin, UserController.updateProfile);
 userRouter.post(
   "/profile/change-password",

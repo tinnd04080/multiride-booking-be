@@ -4,6 +4,10 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 
 const UserController = {
+  index: async (req, res) => {
+    res.render('index', { title: 'Home Page', name: 'Express User' }); 
+  },
+
   getProfile: async (req, res) => {
     try {
       const userId = req.user.id;

@@ -14,8 +14,16 @@ app.use(
     origin: ["*"],
   })
 );
+
+app.use(express.static('./src/public'));
+
 app.use(morgan("dev"));
 app.use(express.json());
+
+app.set('view engine', 'pug');
+
+app.set('views', './src/views');
+
 
 // connect db
 connectDB();
