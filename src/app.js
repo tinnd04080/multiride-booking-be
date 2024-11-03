@@ -6,6 +6,7 @@ import connectDB from "./config/connectDB.js";
 dotenv.config();
 
 import router from "./routes/index.js";
+import adminRouter from "./routes/admin.js";
 import cronJobInitial from "./config/cronJobInitial.js";
 
 const app = express();
@@ -31,6 +32,8 @@ connectDB();
 cronJobInitial();
 
 app.use("/api", router);
+
+app.use("/admin", adminRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log("Server is running on port", PORT));
