@@ -99,7 +99,9 @@ const UserController = {
 
   getUsers: async (req, res) => {
     try {
-      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT } = req.query;
+      console.log(req.query);
+      
+      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT, role } = req.query;
 
       const users = await User.find()
         .sort("-createdAt")

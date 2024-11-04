@@ -13,6 +13,17 @@ const AuthController = {
     res.render('index', {});
   },
 
+  logout: async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).send('Failed to logout');
+      }
+      res.clearCookie('connect.sid');
+      res.render('login', {});
+    });
+    
+  },
+
   signUp: async (req, res) => {
     const { userName, password, email, phoneNumber, fullName, cccd } = req.body;
 
@@ -88,24 +99,18 @@ const AuthController = {
 
     try {
 
-      // TODO: logic below
-      // check email registered
-      const findUser = await User.find({ email });
-
-      console.log(email);
-      console.log(findUser);
-      
+      const findUser = await User.findOne({ email });
 
       if (!findUser) {
         return res.render('login', { error: 'Tài khoản hoặc Mật khẩu không chính xác!' }); 
       }
 
       // check password
-      // const isPasswordValid = await bcrypt.compare(password, findUser.password);
+      const isPasswordValid = await bcrypt.compare(password, findUser.password);
 
-      // if (!isPasswordValid) {
-      //   return res.render('login', { error: 'Tài khoản hoặc Mật khẩu không chính xác!' }); 
-      // }
+      if (!isPasswordValid) {
+        return res.render('login', { error: 'Tài khoản hoặc Mật khẩu không chính xác!' }); 
+      }
 
       const role = await Permission.findOne({ user: findUser._id }).exec();
 

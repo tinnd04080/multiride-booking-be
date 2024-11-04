@@ -47,6 +47,9 @@ head
                 .form-group
                   label.text-dark(for='pwd') Password
                   input#pwd.form-control(type='password' name='password' placeholder='Enter your password')
+              if error
+                form-group
+                  label.text-danger #{error}
               .col-lg-12.mb-5.text-center
                 button.btn.btn-block.btn-dark(type='submit')
                   | &Dstrok;&abreve;ng nh&#x1EAD;p

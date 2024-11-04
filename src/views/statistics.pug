@@ -10,17 +10,17 @@ head
   link(rel='icon' type='image/png' sizes='16x16' href='assets/images/favicon.png')
   title Admin | Th&#x1ED1;ng k&ecirc;
   // Custom CSS
-  link(href='assets/extra-libs/c3/c3.min.css' rel='stylesheet')
-  link(href='assets/libs/chartist/dist/chartist.min.css' rel='stylesheet')
-  link(href='assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css' rel='stylesheet')
+  link(href='/assets/extra-libs/c3/c3.min.css' rel='stylesheet')
+  link(href='/assets/libs/chartist/dist/chartist.min.css' rel='stylesheet')
+  link(href='/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css' rel='stylesheet')
   // Custom CSS
-  link(href='dist/css/style.min.css' rel='stylesheet')
+  link(href='/dist/css/style.min.css' rel='stylesheet')
   script(src='https://cdn.tailwindcss.com')
   // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
   // WARNING: Respond.js doesn't work if you view the page via file://
   //if lt IE 9
-    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    script(src='/https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='/https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 // ==============================================================
 // Preloader - style you can find in spinners.css
 // ==============================================================
@@ -39,22 +39,22 @@ head
     nav.navbar.top-navbar.navbar-expand-md
       .navbar-header(data-logobg='skin6')
         // This is for the sidebar toggle which is visible on mobile only
-        a.nav-toggler.waves-effect.waves-light.d-block.d-md-none(href='javascript:void(0)')
+        a.nav-toggler.waves-effect.waves-light.d-block.d-md-none(href='/javascript:void(0)')
           i.ti-menu.ti-close
         // ==============================================================
         // Logo
         // ==============================================================
         .navbar-brand
           // Logo icon
-          a.tw-h-full.tw-py-4.tw-w-full(href='index.html' class='!tw-block')
-            img.dark-logo.tw-h-full.tw-w-full.tw-object-contain(src='assets/images/logo.png' alt='homepage' class='!tw-block')
+          a.tw-h-full.tw-py-4.tw-w-full(href='/admin' class='!tw-block')
+            img.dark-logo.tw-h-full.tw-w-full.tw-object-contain(src='/assets/images/logo.png' alt='homepage' class='!tw-block')
         // ==============================================================
         // End Logo
         // ==============================================================
         // ==============================================================
         // Toggle which is visible on mobile only
         // ==============================================================
-        a.topbartoggler.d-block.d-md-none.waves-effect.waves-light(href='javascript:void(0)' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+        a.topbartoggler.d-block.d-md-none.waves-effect.waves-light(href='/javascript:void(0)' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
           i.ti-more
       // ==============================================================
       // End Logo
@@ -66,7 +66,7 @@ head
         ul.navbar-nav.float-left.mr-auto.ml-3.pl-1
           // Notification
           li.nav-item.dropdown
-            a#bell.nav-link.dropdown-toggle.pl-md-3.position-relative(href='javascript:void(0)' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            a#bell.nav-link.dropdown-toggle.pl-md-3.position-relative(href='/javascript:void(0)' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
               span
                 i.svg-icon(data-feather='bell')
               span.badge.badge-primary.notify-no.rounded-circle 5
@@ -75,7 +75,7 @@ head
                 li
                   .message-center.notifications.position-relative
                     // Message
-                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='javascript:void(0)')
+                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='/javascript:void(0)')
                       .btn.btn-danger.rounded-circle.btn-circle
                         i.text-white(data-feather='airplay')
                       .w-75.d-inline-block.v-middle.pl-2
@@ -84,7 +84,7 @@ head
                         span.font-12.text-nowrap.d-block.text-muted Just see the my new admin!
                         span.font-12.text-nowrap.d-block.text-muted 9:30 AM
                     // Message
-                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='javascript:void(0)')
+                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='/javascript:void(0)')
                       span.btn.btn-success.text-white.rounded-circle.btn-circle
                         i.text-white(data-feather='calendar')
                       .w-75.d-inline-block.v-middle.pl-2
@@ -92,7 +92,7 @@ head
                         span.font-12.text-nowrap.d-block.text-muted.text-truncate Just a reminder that you have event
                         span.font-12.text-nowrap.d-block.text-muted 9:10 AM
                     // Message
-                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='javascript:void(0)')
+                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='/javascript:void(0)')
                       span.btn.btn-info.rounded-circle.btn-circle
                         i.text-white(data-feather='settings')
                       .w-75.d-inline-block.v-middle.pl-2
@@ -100,7 +100,7 @@ head
                         span.font-12.text-nowrap.d-block.text-muted.text-truncate You can customize this template as you want
                         span.font-12.text-nowrap.d-block.text-muted 9:08 AM
                     // Message
-                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='javascript:void(0)')
+                    a.message-item.d-flex.align-items-center.border-bottom.px-3.py-2(href='/javascript:void(0)')
                       span.btn.btn-primary.rounded-circle.btn-circle
                         i.text-white(data-feather='box')
                       .w-75.d-inline-block.v-middle.pl-2
@@ -108,7 +108,7 @@ head
                         span.font-12.text-nowrap.d-block.text-muted Just see the my admin!
                         span.font-12.text-nowrap.d-block.text-muted 9:02 AM
                 li
-                  a.nav-link.pt-3.text-center.text-dark(href='javascript:void(0);')
+                  a.nav-link.pt-3.text-center.text-dark(href='/javascript:void(0);')
                     strong Check all notifications
                     i.fa.fa-angle-right
           // End Notification
@@ -116,13 +116,13 @@ head
           // create new
           // ==============================================================
           li.nav-item.dropdown
-            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            a#navbarDropdown.nav-link.dropdown-toggle(href='/#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
               i.svg-icon(data-feather='settings')
             .dropdown-menu(aria-labelledby='navbarDropdown')
-              a.dropdown-item(href='#') Action
-              a.dropdown-item(href='#') Another action
+              a.dropdown-item(href='/#') Action
+              a.dropdown-item(href='/#') Another action
               .dropdown-divider
-              a.dropdown-item(href='#') Something else here
+              a.dropdown-item(href='/#') Something else here
         // ==============================================================
         // Right side toggle and nav items
         // ==============================================================
@@ -131,7 +131,7 @@ head
           // Search
           // ==============================================================
           li.nav-item.d-none.d-md-block
-            a.nav-link(href='javascript:void(0)')
+            a.nav-link(href='/javascript:void(0)')
               form
                 .customize-input
                   input.form-control.custom-shadow.custom-radius.border-0.bg-white(type='search' placeholder='Tìm kiếm' aria-label='Search')
@@ -140,34 +140,34 @@ head
           // User profile and search
           // ==============================================================
           li.nav-item.dropdown
-            a.nav-link.dropdown-toggle(href='javascript:void(0)' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-              img.rounded-circle(src='assets/images/users/profile-pic.jpg' alt='user' width='40')
+            a.nav-link.dropdown-toggle(href='/javascript:void(0)' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              img.rounded-circle(src='/assets/images/users/profile-pic.jpg' alt='user' width='40')
               span.ml-2.d-none.d-lg-inline-block
                 span Xin ch&agrave;o,
                 span.text-dark Admin
                 i.svg-icon(data-feather='chevron-down')
             .dropdown-menu.dropdown-menu-right.user-dd.animated.flipInY
-              a.dropdown-item(href='update-profile.html')
+              a.dropdown-item(href='/update-profile.html')
                 i.svg-icon.mr-2.ml-1(data-feather='user')
                 |  My
                 |                     Profile
-              a.dropdown-item(href='javascript:void(0)')
+              a.dropdown-item(href='/javascript:void(0)')
                 i.svg-icon.mr-2.ml-1(data-feather='credit-card')
                 |                     My Balance
-              a.dropdown-item(href='javascript:void(0)')
+              a.dropdown-item(href='/javascript:void(0)')
                 i.svg-icon.mr-2.ml-1(data-feather='mail')
                 |                     Inbox
               .dropdown-divider
-              a.dropdown-item(href='javascript:void(0)')
+              a.dropdown-item(href='/javascript:void(0)')
                 i.svg-icon.mr-2.ml-1(data-feather='settings')
                 |                     Account Setting
               .dropdown-divider
-              a.dropdown-item(href='javascript:void(0)')
+              a.dropdown-item(href='/javascript:void(0)')
                 i.svg-icon.mr-2.ml-1(data-feather='power')
                 |                     Logout
               .dropdown-divider
               .pl-4.p-3
-                a.btn.btn-sm.btn-info(href='javascript:void(0)') View Profile
+                a.btn.btn-sm.btn-info(href='/javascript:void(0)') View Profile
           // ==============================================================
           // User profile and search
           // ==============================================================
@@ -184,71 +184,71 @@ head
       nav.sidebar-nav
         ul#sidebarnav
           li.sidebar-item
-            a.sidebar-link.sidebar-link(href='index.html' aria-expanded='false')
+            a.sidebar-link.sidebar-link(href='//admin' aria-expanded='false')
               i.feather-icon(data-feather='home')
               span.hide-menu Dashboard
           li.list-divider
           li.nav-small-cap
             span.hide-menu Chung
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='file-text')
               span.hide-menu Ng&#x1B0;&#x1EDD;i d&ugrave;ng
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='staff.html')
+                a.sidebar-link(href='/admin/users')
                   span.hide-menu Nh&acirc;n vi&ecirc;n
               li.sidebar-item
-                a.sidebar-link(href='customer.html')
+                a.sidebar-link(href='/admin/users')
                   span.hide-menu Kh&aacute;ch h&agrave;ng
               li.sidebar-item
-                a.sidebar-link(href='update-role.html')
+                a.sidebar-link(href='/admin/users')
                   span.hide-menu Ph&acirc;n quy&#x1EC1;n
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='grid')
               span.hide-menu Qu&#x1EA3;n l&yacute; tuy&#x1EBF;n xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='bus-route.html')
+                a.sidebar-link(href='/bus-route.html')
                   span.hide-menu Danh s&aacute;ch tuy&#x1EBF;n xe
               li.sidebar-item
-                a.sidebar-link(href='add-bus-route.html')
+                a.sidebar-link(href='/add-bus-route.html')
                   span.hide-menu Th&ecirc;m tuy&#x1EBF;n xe
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='bar-chart')
               span.hide-menu Qu&#x1EA3;n l&yacute; chuy&#x1EBF;n xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='trip.html')
+                a.sidebar-link(href='/admin/trips')
                   span.hide-menu Danh s&aacute;ch chuy&#x1EBF;n xe
               li.sidebar-item
-                a.sidebar-link(href='add-trip.html')
+                a.sidebar-link(href='/admin/trips')
                   span.hide-menu Th&ecirc;m chuy&#x1EBF;n xe
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='box')
               span.hide-menu Qu&#x1EA3;n l&yacute; xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='bus.html')
+                a.sidebar-link(href='/admin/buses')
                   span.hide-menu Danh s&aacute;ch xe
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='box')
               span.hide-menu Qu&#x1EA3;n l&yacute; ho&aacute; &dstrok;&#x1A1;n
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='invoice.html')
+                a.sidebar-link(href='/invoice.html')
                   span.hide-menu Danh s&aacute;ch ho&aacute; &dstrok;&#x1A1;n
           li.sidebar-item
-            a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
+            a.sidebar-link.has-arrow(href='/javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='box')
               span.hide-menu Th&#x1ED1;ng k&ecirc;
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='statistics.html')
+                a.sidebar-link(href='/admin/statistics')
                   span.hide-menu Th&#x1ED1;ng k&ecirc;
       // End Sidebar navigation
     // End Sidebar scroll
@@ -271,7 +271,7 @@ head
             nav(aria-label='breadcrumb')
               ol.breadcrumb.m-0.p-0
                 li.breadcrumb-item
-                  a.text-muted(href='index.html') Trang ch&#x1EE7;
+                  a.text-muted(href='//admin') Trang ch&#x1EE7;
                 li.breadcrumb-item.text-muted.active(aria-current='page')
                   | Th&#x1ED1;ng k&ecirc;
     // ==============================================================
@@ -350,28 +350,28 @@ head
 // ==============================================================
 // All Jquery
 // ==============================================================
-script(src='assets/libs/jquery/dist/jquery.min.js')
+script(src='/assets/libs/jquery/dist/jquery.min.js')
 // Bootstrap tether Core JavaScript
-script(src='assets/libs/popper.js/dist/umd/popper.min.js')
-script(src='assets/libs/bootstrap/dist/js/bootstrap.min.js')
+script(src='/assets/libs/popper.js/dist/umd/popper.min.js')
+script(src='/assets/libs/bootstrap/dist/js/bootstrap.min.js')
 // apps
 // apps
-script(src='dist/js/app-style-switcher.js')
-script(src='dist/js/feather.min.js')
+script(src='/dist/js/app-style-switcher.js')
+script(src='/dist/js/feather.min.js')
 // slimscrollbar scrollbar JavaScript
-script(src='assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')
-script(src='assets/extra-libs/sparkline/sparkline.js')
+script(src='/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')
+script(src='/assets/extra-libs/sparkline/sparkline.js')
 // Wave Effects
 // themejs
 // Menu sidebar
-script(src='dist/js/sidebarmenu.js')
+script(src='/dist/js/sidebarmenu.js')
 // Custom JavaScript
-script(src='dist/js/custom.min.js')
+script(src='/dist/js/custom.min.js')
 // This Page JS
 // Morris JavaScript
-script(src='assets/libs/raphael/raphael.min.js')
-script(src='assets/libs/morris.js/morris.min.js')
-script(src='dist/js/pages/morris/morris-data.js')
+script(src='/assets/libs/raphael/raphael.min.js')
+script(src='/assets/libs/morris.js/morris.min.js')
+script(src='/dist/js/pages/morris/morris-data.js')
 script.
   tailwind.config = {
   prefix: "tw-",

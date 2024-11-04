@@ -13,7 +13,7 @@ head
   link(href='/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css' rel='stylesheet')
   // Custom CSS
   link(href='/dist/css/style.min.css' rel='stylesheet')
-  script(src='/https://cdn.tailwindcss.com')
+  script(src='https://cdn.tailwindcss.com')
   // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
   // WARNING: Respond.js doesn't work if you view the page via file://
   //if lt IE 9
@@ -44,7 +44,7 @@ head
         // ==============================================================
         .navbar-brand
           // Logo icon
-          a.tw-h-full.tw-py-4.tw-w-full(href='index.html' class='!tw-block')
+          a.tw-h-full.tw-py-4.tw-w-full(href='/admin' class='!tw-block')
             img.dark-logo.tw-h-full.tw-w-full.tw-object-contain(src='/assets/images/logo.png' alt='homepage' class='!tw-block')
         // ==============================================================
         // End Logo
@@ -182,7 +182,7 @@ head
       nav.sidebar-nav
         ul#sidebarnav
           li.sidebar-item
-            a.sidebar-link.sidebar-link(href='index.html' aria-expanded='false')
+            a.sidebar-link.sidebar-link(href='/admin' aria-expanded='false')
               i.feather-icon(data-feather='home')
               span.hide-menu Dashboard
           li.list-divider
@@ -194,10 +194,10 @@ head
               span.hide-menu Ng&#x1B0;&#x1EDD;i d&ugrave;ng
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='staff.html')
+                a.sidebar-link(href='/admin/users')
                   span.hide-menu Nh&acirc;n vi&ecirc;n
               li.sidebar-item
-                a.sidebar-link(href='customer.html')
+                a.sidebar-link(href='/admin/users')
                   span.hide-menu Kh&aacute;ch h&agrave;ng
               li.sidebar-item
                 a.sidebar-link(href='update-role.html')
@@ -208,10 +208,10 @@ head
               span.hide-menu Qu&#x1EA3;n l&yacute; tuy&#x1EBF;n xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='bus-route.html')
+                a.sidebar-link(href='/admin/bus-routes')
                   span.hide-menu Danh s&aacute;ch tuy&#x1EBF;n xe
               li.sidebar-item
-                a.sidebar-link(href='add-bus-route.html')
+                a.sidebar-link(href='/admin/add-bus-route')
                   span.hide-menu Th&ecirc;m tuy&#x1EBF;n xe
           li.sidebar-item
             a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
@@ -219,10 +219,10 @@ head
               span.hide-menu Qu&#x1EA3;n l&yacute; chuy&#x1EBF;n xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='trip.html')
+                a.sidebar-link(href='/admin/trips')
                   span.hide-menu Danh s&aacute;ch chuy&#x1EBF;n xe
               li.sidebar-item
-                a.sidebar-link(href='add-trip.html')
+                a.sidebar-link(href='/admin/add-trip')
                   span.hide-menu Th&ecirc;m chuy&#x1EBF;n xe
           li.sidebar-item
             a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
@@ -230,7 +230,7 @@ head
               span.hide-menu Qu&#x1EA3;n l&yacute; xe
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='bus.html')
+                a.sidebar-link(href='/admin/buses')
                   span.hide-menu Danh s&aacute;ch xe
           li.sidebar-item
             a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
@@ -246,7 +246,7 @@ head
               span.hide-menu Th&#x1ED1;ng k&ecirc;
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='statistics.html')
+                a.sidebar-link(href='/admin/statistics')
                   span.hide-menu Th&#x1ED1;ng k&ecirc;
       // End Sidebar navigation
     // End Sidebar scroll
@@ -269,7 +269,7 @@ head
             nav(aria-label='breadcrumb')
               ol.breadcrumb.m-0.p-0
                 li.breadcrumb-item
-                  a.text-muted(href='index.html') Trang ch&#x1EE7;
+                  a.text-muted(href='/admin') Trang ch&#x1EE7;
                 li.breadcrumb-item.text-muted.active(aria-current='page')
                   | Danh s&aacute;ch nh&acirc;n vi&ecirc;n
     // ==============================================================
