@@ -10,15 +10,15 @@ head
   link(rel='icon' type='image/png' sizes='16x16' href='assets/images/favicon.png')
   title Admin | Qu&#x1EA3;n l&yacute; nh&acirc;n vi&ecirc;n
   // This page plugin CSS
-  link(href='assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css' rel='stylesheet')
+  link(href='/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css' rel='stylesheet')
   // Custom CSS
-  link(href='dist/css/style.min.css' rel='stylesheet')
-  script(src='https://cdn.tailwindcss.com')
+  link(href='/dist/css/style.min.css' rel='stylesheet')
+  script(src='/https://cdn.tailwindcss.com')
   // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
   // WARNING: Respond.js doesn't work if you view the page via file://
   //if lt IE 9
-    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-    script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    script(src='/https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='/https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 // ==============================================================
 // Preloader - style you can find in spinners.css
 // ==============================================================
@@ -45,7 +45,7 @@ head
         .navbar-brand
           // Logo icon
           a.tw-h-full.tw-py-4.tw-w-full(href='index.html' class='!tw-block')
-            img.dark-logo.tw-h-full.tw-w-full.tw-object-contain(src='assets/images/logo.png' alt='homepage' class='!tw-block')
+            img.dark-logo.tw-h-full.tw-w-full.tw-object-contain(src='/assets/images/logo.png' alt='homepage' class='!tw-block')
         // ==============================================================
         // End Logo
         // ==============================================================
@@ -139,7 +139,7 @@ head
           // ==============================================================
           li.nav-item.dropdown
             a.nav-link.dropdown-toggle(href='javascript:void(0)' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-              img.rounded-circle(src='assets/images/users/profile-pic.jpg' alt='user' width='40')
+              img.rounded-circle(src='/assets/images/users/profile-pic.jpg' alt='user' width='40')
               span.ml-2.d-none.d-lg-inline-block
                 span Xin ch&agrave;o,
                 span.text-dark Admin
@@ -372,26 +372,26 @@ head
 // ==============================================================
 // All Jquery
 // ==============================================================
-script(src='assets/libs/jquery/dist/jquery.min.js')
+script(src='/assets/libs/jquery/dist/jquery.min.js')
 // Bootstrap tether Core JavaScript
-script(src='assets/libs/popper.js/dist/umd/popper.min.js')
-script(src='assets/libs/bootstrap/dist/js/bootstrap.min.js')
+script(src='/assets/libs/popper.js/dist/umd/popper.min.js')
+script(src='/assets/libs/bootstrap/dist/js/bootstrap.min.js')
 // apps
 // apps
-script(src='dist/js/app-style-switcher.js')
-script(src='dist/js/feather.min.js')
+script(src='/dist/js/app-style-switcher.js')
+script(src='/dist/js/feather.min.js')
 // slimscrollbar scrollbar JavaScript
-script(src='assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')
-script(src='assets/extra-libs/sparkline/sparkline.js')
+script(src='/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')
+script(src='/assets/extra-libs/sparkline/sparkline.js')
 // Wave Effects
 // themejs
 // Menu sidebar
-script(src='dist/js/sidebarmenu.js')
+script(src='/dist/js/sidebarmenu.js')
 // Custom JavaScript
-script(src='dist/js/custom.min.js')
+script(src='/dist/js/custom.min.js')
 // This page plugins
-script(src='assets/extra-libs/datatables.net/js/jquery.dataTables.min.js')
-script(src='dist/js/pages/datatable/datatable-basic.init.js')
+script(src='/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js')
+script(src='/dist/js/pages/datatable/datatable-basic.init.js')
 script.
   tailwind.config = {
   prefix: "tw-",

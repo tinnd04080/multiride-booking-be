@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
 import connectDB from "./config/connectDB.js";
 dotenv.config();
 
@@ -15,6 +16,14 @@ app.use(
     origin: ["*"],
   })
 );
+
+app.use(session({
+  secret: 'keyboard cat',
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('./src/public'));
 

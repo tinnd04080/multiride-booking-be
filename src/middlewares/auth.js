@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/users.js";
 import Permission from "../models/permissions.js";
+import { render } from "pug";
 
 export const checkLogin = (req, res, next) => {
   try {
@@ -46,3 +47,10 @@ export const isAdmin = async (req, res, next) => {
     });
   }
 };
+
+export function isAuthenticated (req, res, next) {
+  console.log(req.session);
+  
+  if (req.session.user) next()
+  else res.render('login', { title: 'Login Page', name: 'Express User' }); 
+}

@@ -9,6 +9,10 @@ import sendMail from "../../utils/sendMail.js";
 import dayjs from "dayjs";
 
 const AuthController = {
+  index: async (req, res) => {
+    res.render('index', {});
+  },
+
   signUp: async (req, res) => {
     const { userName, password, email, phoneNumber, fullName, cccd } = req.body;
 
@@ -83,47 +87,35 @@ const AuthController = {
     }
 
     try {
-      res.render('index', { title: 'Home Page', name: 'Express User' }); 
+
       // TODO: logic below
       // check email registered
-      const findUser = await User.findOne({ email }).exec();
+      const findUser = await User.find({ email });
+
+      console.log(email);
+      console.log(findUser);
+      
 
       if (!findUser) {
-        return res.render('login', { title: 'Login Page', name: 'Express User' }); 
-      }
-
-      // kiểm tra tài khoản đã xác minh chưa
-      if (!findUser.isVerified) {
-        return res
-          .status(400)
-          .json({ message: "Tài khoản chưa được xác minh" });
+        return res.render('login', { error: 'Tài khoản hoặc Mật khẩu không chính xác!' }); 
       }
 
       // check password
-      const isPasswordValid = await bcrypt.compare(password, findUser.password);
+      // const isPasswordValid = await bcrypt.compare(password, findUser.password);
 
-      if (!isPasswordValid) {
-        return res.status(400).json({ message: "Mật khẩu không chính xác!" });
-      }
+      // if (!isPasswordValid) {
+      //   return res.render('login', { error: 'Tài khoản hoặc Mật khẩu không chính xác!' }); 
+      // }
 
       const role = await Permission.findOne({ user: findUser._id }).exec();
 
-      const token = jwt.sign(
-        {
-          id: findUser._id,
-          email: findUser.email,
-        },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: "30d" }
-      );
+      // if(role?.role !== 'ADMIN') {
+      //   // TODO: redirect 403 
+      // }
 
-      res.json({
-        user: {
-          ...findUser.toJSON(),
-          role: role.role,
-        },
-        token,
-      });
+      req.session.user = findUser;
+      res.redirect("/admin");
+      
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
