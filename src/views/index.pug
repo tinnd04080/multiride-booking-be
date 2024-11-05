@@ -196,14 +196,14 @@ head
               span.hide-menu Ng&#x1B0;&#x1EDD;i d&ugrave;ng
             ul.collapse.first-level.base-level-line(aria-expanded='false')
               li.sidebar-item
-                a.sidebar-link(href='/admin/users?role=staff')
+                a.sidebar-link(href='/admin/users?role=STAFF')
                   span.hide-menu Nh&acirc;n vi&ecirc;n
               li.sidebar-item
-                a.sidebar-link(href='/admin/users')
+                a.sidebar-link(href='/admin/users?role=CUSTOMER')
                   span.hide-menu Kh&aacute;ch h&agrave;ng
               li.sidebar-item
-                a.sidebar-link(href='/admin/users')
-                  span.hide-menu Ph&acirc;n quy&#x1EC1;n
+                a.sidebar-link(href='/admin/users/add')
+                  span.hide-menu Thêm người dùng 
           li.sidebar-item
             a.sidebar-link.has-arrow(href='javascript:void(0)' aria-expanded='false')
               i.feather-icon(data-feather='grid')
@@ -288,7 +288,7 @@ head
             .d-flex.d-lg-flex.d-md-block.align-items-center
               div
                 .d-inline-flex.align-items-center
-                  h2.text-dark.mb-1.font-weight-medium 236
+                  h2.text-dark.mb-1.font-weight-medium #{countCustomer}
                 h6.text-muted.font-weight-normal.mb-0.w-100.text-truncate
                   | Kh&aacute;ch h&agrave;ng
               .ml-auto.mt-md-3.mt-lg-0
@@ -299,7 +299,7 @@ head
             .d-flex.d-lg-flex.d-md-block.align-items-center
               div
                 h2.text-dark.mb-1.w-100.text-truncate.font-weight-medium
-                  | 20
+                  | #{countTrip}
                 h6.text-muted.font-weight-normal.mb-0.w-100.text-truncate
                   | S&#x1ED1; chuy&#x1EBF;n xe
               .ml-auto.mt-md-3.mt-lg-0

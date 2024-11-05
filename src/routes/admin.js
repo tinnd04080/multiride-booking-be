@@ -11,7 +11,10 @@ import { isAuthenticated } from "../middlewares/auth.js";
 const adminRouter = express.Router();
 
 adminRouter.get("/", isAuthenticated,  AuthController.index);
-adminRouter.get("/users", isAuthenticated,  UserController.getUsers);
+adminRouter.get("/users",  UserController.getUsers);
+adminRouter.get("/users/add",  UserController.createUser);
+adminRouter.post("/users/add",  UserController.createUser);
+adminRouter.delete("/users/:id",  UserController.removeUser);
 adminRouter.get("/login", AuthController.signIn);
 adminRouter.post("/login", AuthController.signIn);
 adminRouter.get("/logout", AuthController.logout);

@@ -1,4 +1,5 @@
 import User from "../../models/users.js";
+import Trip from "../../models/trips.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ROLE } from "../../constants/index.js";
@@ -10,7 +11,12 @@ import dayjs from "dayjs";
 
 const AuthController = {
   index: async (req, res) => {
-    res.render('index', {});
+    const countCustomer = await User.countDocuments({ role: ROLE.CUSTOMER });
+    const countTrip = await Trip.countDocuments({});
+    res.render('index', {
+      countCustomer,
+      countTrip
+    });
   },
 
   logout: async (req, res) => {

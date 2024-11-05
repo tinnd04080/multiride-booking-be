@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { ROLE, GENDER } from "../constants/index.js";
 
 const userSchema = new Schema(
   {
@@ -29,7 +30,27 @@ const userSchema = new Schema(
     isVerified: {
       type: Boolean,
       default: false
-    }
+    },
+    role: {
+      type: String,
+      enum: Object.values(ROLE),
+      required: true,
+      default: ROLE.CUSTOMER,
+    },
+    address: {
+      type: String,
+      default: null,
+    },
+    gender: {
+      type: String,
+      enum: Object.values(GENDER),
+      required: true,
+      default: GENDER.MAN,
+    },
+    old: {
+      type: Number,
+      default: null,
+    },
   },
   { timestamps: true }
 );

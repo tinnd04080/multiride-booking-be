@@ -43,3 +43,8 @@ export const DISCOUNT_TYPE = {
   AMOUNT: "AMOUNT",
   PERCENT: "PERCENT",
 };
+
+export const GENDER = {
+  MAN: "Nam",
+  WOMAN: "Nữ",
+};

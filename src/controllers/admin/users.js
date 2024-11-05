@@ -1,4 +1,4 @@
-import { PAGINATION } from "../../constants/index.js";
+import { PAGINATION, ROLE } from "../../constants/index.js";
 import Permission from "../../models/permissions.js";
 import User from "../../models/users.js";
 import bcrypt from "bcrypt";
@@ -101,9 +101,12 @@ const UserController = {
     try {
       console.log(req.query);
       
-      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT, role } = req.query;
+      const { page = PAGINATION.PAGE, limit = PAGINATION.LIMIT, role = ROLE.CUSTOMER } = req.query;
 
-      const users = await User.find()
+      console.log(role);
+      
+
+      const users = await User.find({role})
         .sort("-createdAt")
         .skip((page - 1) * limit)
         .limit(limit * 1)
@@ -114,7 +117,11 @@ const UserController = {
       const totalPage = Math.ceil(count / limit);
       const currentPage = Number(page);
 
-      res.render('staff', {})
+      res.render('staff', {
+        users,
+        totalPage,
+        currentPage
+      })
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -202,6 +209,39 @@ const UserController = {
       });
     }
   },
+
+  createUser: async (req, res) => {
+    if (req.method === 'GET') {
+      return res.render('add-user')
+    }
+
+    const { userName, password = 'admin', email, phoneNumber, fullName=userName, cccd, gender, address, role } = req.body;
+    
+    const user = await User.findOne({email})
+    
+    if (user) {
+      return res.render('add-user', {error: 'Người dùng đã tồn tại'})
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await new User({
+      userName,
+      email,
+      phoneNumber,
+      fullName,
+      cccd,
+      password: hashedPassword,
+      gender,
+      address,
+      isVerified: true,
+      role
+    }).save();
+
+    
+    res.redirect('/admin/users')
+  }
 };
 
 export default UserController;
