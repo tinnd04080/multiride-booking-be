@@ -15,6 +15,9 @@ adminRouter.get("/users",  UserController.getUsers);
 adminRouter.get("/users/add",  UserController.createUser);
 adminRouter.post("/users/add",  UserController.createUser);
 adminRouter.delete("/users/:id",  UserController.removeUser);
+adminRouter.get("/users/:id/edit",  UserController.updateUser);
+adminRouter.post("/users/:id/edit",  UserController.updateUser);
+
 adminRouter.get("/login", AuthController.signIn);
 adminRouter.post("/login", AuthController.signIn);
 adminRouter.get("/logout", AuthController.logout);

@@ -148,7 +148,16 @@ const UserController = {
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { userName, phoneNumber, fullName, cccd } = req.body;
+
+      const userFind = await User.findById(id)
+
+      if (req.method === 'GET') {
+        return res.render('update-profile', {
+          user: userFind
+        })
+      }
+
+      const { userName, phoneNumber, fullName=userName, cccd, gender, address, role, dob } = req.body;
 
       const user = await User.findByIdAndUpdate(
         id,
@@ -157,11 +166,15 @@ const UserController = {
           phoneNumber,
           fullName,
           cccd,
+          gender,
+          address,
+          role,
+          dob
         },
         { new: true }
       );
 
-      res.json(user);
+      res.redirect(`/admin/users?role=${role}`)
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
@@ -215,7 +228,7 @@ const UserController = {
       return res.render('add-user')
     }
 
-    const { userName, password = 'admin', email, phoneNumber, fullName=userName, cccd, gender, address, role } = req.body;
+    const { userName, password = 'admin', email, phoneNumber, fullName=userName, cccd, gender, address, role, dob } = req.body;
     
     const user = await User.findOne({email})
     
@@ -236,7 +249,8 @@ const UserController = {
       gender,
       address,
       isVerified: true,
-      role
+      role,
+      dob
     }).save();
 
     

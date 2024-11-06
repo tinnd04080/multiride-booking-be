@@ -47,8 +47,8 @@ const userSchema = new Schema(
       required: true,
       default: GENDER.MAN,
     },
-    old: {
-      type: Number,
+    dob: {
+      type: Date,
       default: null,
     },
   },

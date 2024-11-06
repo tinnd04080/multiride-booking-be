@@ -78,13 +78,12 @@ const BusRouteController = {
       const totalPage = Math.ceil(count / limit);
       const currentPage = Number(page);
 
-      res.render('bus-route', {})
+      res.render('bus-route', {
+        busRoutes,
+        totalPage,
+        currentPage
+      })
 
-      // res.json({
-      //   data: busRoutes,
-      //   totalPage,
-      //   currentPage,
-      // });
     } catch (error) {
       res.status(500).json({
         message: "Internal server error",
