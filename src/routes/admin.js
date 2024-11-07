@@ -11,15 +11,15 @@ import { isAuthenticated } from "../middlewares/auth.js";
 const adminRouter = express.Router();
 
 adminRouter.get("/", isAuthenticated,  AuthController.index);
-adminRouter.get("/users",  UserController.getUsers);
-adminRouter.get("/users/add",  UserController.createUser);
-adminRouter.post("/users/add",  UserController.createUser);
-adminRouter.delete("/users/:id",  UserController.removeUser);
-adminRouter.get("/users/:id/edit",  UserController.updateUser);
-adminRouter.post("/users/:id/edit",  UserController.updateUser);
+adminRouter.get("/users", isAuthenticated,  UserController.getUsers);
+adminRouter.get("/users/add", isAuthenticated,  UserController.createUser);
+adminRouter.post("/users/add", isAuthenticated,  UserController.createUser);
+adminRouter.delete("/users/:id", isAuthenticated,  UserController.removeUser);
+adminRouter.get("/users/:id/edit", isAuthenticated,  UserController.updateUser);
+adminRouter.post("/users/:id/edit", isAuthenticated,  UserController.updateUser);
 
-adminRouter.get("/login", isAuthenticated, AuthController.signIn);
-adminRouter.post("/login", isAuthenticated, AuthController.signIn);
+adminRouter.get("/login", AuthController.signIn);
+adminRouter.post("/login", AuthController.signIn);
 adminRouter.get("/logout", isAuthenticated, AuthController.logout);
 
 adminRouter.get("/bus-routes", isAuthenticated, RouteController.getBusRoutes);
