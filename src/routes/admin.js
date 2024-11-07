@@ -18,9 +18,9 @@ adminRouter.delete("/users/:id",  UserController.removeUser);
 adminRouter.get("/users/:id/edit",  UserController.updateUser);
 adminRouter.post("/users/:id/edit",  UserController.updateUser);
 
-adminRouter.get("/login", AuthController.signIn);
-adminRouter.post("/login", AuthController.signIn);
-adminRouter.get("/logout", AuthController.logout);
+adminRouter.get("/login", isAuthenticated, AuthController.signIn);
+adminRouter.post("/login", isAuthenticated, AuthController.signIn);
+adminRouter.get("/logout", isAuthenticated, AuthController.logout);
 
 adminRouter.get("/bus-routes", isAuthenticated, RouteController.getBusRoutes);
 adminRouter.get("/add-bus-route", isAuthenticated, RouteController.createBusRoutes);
